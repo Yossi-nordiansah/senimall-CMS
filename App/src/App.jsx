@@ -5,12 +5,11 @@ import Owner from "./page/owner";
 import DashboardAdmin from "./component/admin/dahboard";
 import Artwork from "./component/admin/artwork";
 import Submission from "./component/admin/submission_list";
-import Add_Submission from "./component/admin/add_submission";
 import DashboardOwner from "./component/owner/dashboard";
 import Users from "./component/owner/users";
 import UserList from "./component/owner/users_list";
 import AddUser from "./component/owner/add_user";
-import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ArtworkList from "./component/admin/artwork_list";
 import AddArtwork from "./component/admin/add_artworks";
 

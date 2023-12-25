@@ -12,6 +12,8 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const passwordType = useRef();
   const MySwal = withReactContent(Swal);
+  const [userNameShow, setUserNameShow] = useState();
+ 
 
   const token = localStorage.getItem("token"); // Ubah sesuai dengan cara penyimpanan token Anda
   useEffect(() => {
@@ -32,25 +34,34 @@ export default function Login() {
     try {
       const response = await axios.get(`http://localhost:3000/admin?username=${userName}&&password=${password}`);
       const data = response.data[0];
+    
 
-      console.log(data);
+      // console.log(data);
 
       if (data) {
         if (data.role === "owner") {
           console.log("Logging in as owner...");
-          navigate("/owner", { state: data.name });
+          console.log('data:'+data.name)
+          setUserNameShow(data.name);
+          navigate("/owner", { state: userNameShow });
+          console.log(userNameShow);
           localStorage.setItem("token", data.role);
           localStorage.setItem("name", data.name);
         } else if (data.role === "Artist") {
           console.log("Logging in as artist...");
-          navigate("/artist", { state: data.name });
+          setUserNameShow(userNameShow=data.name);
+          navigate("/artist", { state: userNameShow });
+          console.log(userNameShow);
           localStorage.setItem("token", data.role);
           localStorage.setItem("name", data.name);
-        } else {
+        } else if (data.role === 'admin') {
           console.log("Logging in as admin...");
-          navigate("/admin", { state: data.name });
+          console.log('data: '+data.name);
+          setUserNameShow(userNameShow=data.name)
+          navigate("/admin", { state: userNameShow });
+          console.log(userNameShow);
           localStorage.setItem("token", data.role);
-          // localStorage.setItem("name", data.name);
+          localStorage.setItem("name", data.name);
         }
       } else {
         MySwal.fire({
@@ -62,6 +73,7 @@ export default function Login() {
     } catch (error) {
       console.log("Login Error:", error);
     }
+    console.log(userNameShow);
   };
 
   const handleShowPassword = () => {

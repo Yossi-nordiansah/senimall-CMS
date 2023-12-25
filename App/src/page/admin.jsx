@@ -6,7 +6,7 @@ import Footer from "../component/footer";
 export default function Admin() {
   const name = useLocation();
   const [menu, setMenu] = useState("Dashboard");
-  const [adminName, setAdminName] = useState(name.state);
+  const [adminName, setAdminName] = useState();
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
@@ -18,20 +18,25 @@ export default function Admin() {
     if (token === "owner") {
       navigate("/owner", { state: name.state });
     } else if (token === "admin") {
-      navigate("/admin", { state: name.state });
+      navigate("/admin", { state: name.state } );
       // console.log(adminName);
     } else {
       navigate("/");
     }
   }, [token]);
 
+  useEffect(()=>{
+    setAdminName(name)
+    console.log('nama : '+ adminName);
+  },[])
+
   useEffect(() => {
     if (menu === "Dashboard") {
-      navigate("dashboard", { state: name.state });
+      navigate("dashboard");
     } else if (menu === "Artwork") {
-      navigate("artwork", { state: name.state });
+      navigate("artwork");
     } else {
-      navigate("submission", { state: name.state });
+      navigate("submission");
     }
   }, [menu]);
 
@@ -45,3 +50,4 @@ export default function Admin() {
     </div>
   );
 }
+// 
